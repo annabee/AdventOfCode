@@ -19,7 +19,7 @@ object DayTwo extends App {
     List(2155, 225, 2856, 3061, 105, 204, 1269, 171, 2505, 2852, 977, 1377, 181, 1856, 2952, 2262)
   )
 
-  def minInList(listOfLists: List[List[Int]]): Int = {
+  def sumLargestRowDifferences(listOfLists: List[List[Int]]): Int = {
     val rowDifferences = for {
       list <- listOfLists
       diff = list.max - list.min
@@ -29,5 +29,19 @@ object DayTwo extends App {
     rowDifferences.sum
   }
 
-  println(minInList(testInput))
+  println(s"Part 1 answer ${sumLargestRowDifferences(testInput)}.")
+
+  def sumEvenRowDivisions(listOfLists: List[List[Int]]): Int = {
+    val rowDifferences = for {
+      list <- listOfLists
+      permutations <- list.combinations(2).flatMap(_.permutations)
+      (a, b) = (permutations.head, permutations.tail.head)
+      diff = if (a % b == 0) a/b else 0
+    } yield {
+        diff
+    }
+    rowDifferences.sum
+  }
+
+  println(s"Part 2 answer ${sumEvenRowDivisions(testInput)}.")
 }
